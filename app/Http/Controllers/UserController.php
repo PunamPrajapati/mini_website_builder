@@ -58,4 +58,12 @@ class UserController extends Controller
             'access_token' => $token,
         ]);
     }
+
+    public function logout(Request $request)
+    {
+        // Revoke the user's current access token
+        $request->user()->currentAccessToken()->delete();
+
+        return response()->json(['message' => 'Logged out successfully'], 200);
+    }
 }
