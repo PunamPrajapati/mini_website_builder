@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
 {
-    public function register(Request $request){
-        $request->validate([
+    public function register(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'username' => 'required|string|max:255',
@@ -19,6 +21,14 @@ class UserController extends Controller
             'phone_number' => 'required|unique:users',
             'address' => 'string|nullable'
         ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Validation Errors',
+                'data' => $validator->errors()->all()
+            ]);
+        }
         $user = User::create([
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
@@ -38,15 +48,26 @@ class UserController extends Controller
 
     public function login(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'email' => 'required|string|email',
             'password' => 'required|string',
         ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Validation Errors',
+                'data' => $validator->errors()->all()
+            ]);
+        }
+
         $user = User::where('email', $request->email)->first();
 
         if (! $user || ! Hash::check($request->password, $user->password)) {
-            throw ValidationException::withMessages([
-                'email' => ['The provided credentials are incorrect.'],
+            return response()->json([
+                'status' => false,
+                'message' => 'The provided credentials are incorrect.',
+                'data' => []
             ]);
         }
 
@@ -55,7 +76,7 @@ class UserController extends Controller
         return response()->json([
             'status' => true,
             'message' => 'Login successful',
-            'access_token' => $token,
+            'token' => $token,
         ]);
     }
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Website;
 use App\Services\WebsiteService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class WebsiteController extends Controller
 {
@@ -46,11 +47,20 @@ class WebsiteController extends Controller
 
     public function create(Request $request)
     {
-        $data = $request->validate([
+        $data = $request->all();
+        $validator = Validator::make($data, [
             'website_name' => 'required|string|max:255',
             'url' => 'required|string|unique:websites',
             'user_id' => 'required|integer'
         ]);
+        
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Validation Errors',
+                'data' => $validator->errors()->all()
+            ]);
+        }
         $website = $this->websiteService->create($data);
 
         return response()->json([
@@ -62,12 +72,20 @@ class WebsiteController extends Controller
 
     public function update($id, Request $request)
     {
-        $data = $request->validate([
+        $data = $request->all();
+        $validator = Validator::make($data, [
             'website_name' => 'sometimes|required|string|max:255',
             'url' => 'sometimes|required|string|unique:websites,url,' . $id,
             'user_id' => 'required|integer',
         ]);
-
+        
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Validation Errors',
+                'data' => $validator->errors()->all()
+            ]);
+        }
         try {
             $website = $this->websiteService->update($id, $data);
 
