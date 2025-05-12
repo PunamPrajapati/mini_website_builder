@@ -22,25 +22,25 @@ class WebsiteController extends Controller
         $websites = $this->websiteService->getAll();
         return response()->json([
             'status' => true,
-            'message' => 'Websites fetched successfully',
+            'message' => 'Websites data fetched successfully',
             'data' => $websites,
         ], 200);
     }
 
-    public function findById($id)
+    public function getById($id, Request $request)
     {
         try {
-            $website = $this->websiteService->findById($id);
+            $website = $this->websiteService->getById($id);
             return response()->json([
                 'status' => true,
-                'message' => 'Website fetched successfully',
+                'message' => 'Website data fetched successfully',
                 'data' => $website,
             ], 200);
         }catch(\Exception $e)
         {
             return response()->json([
                 'status' => false,
-                'message' => 'Website not found',
+                'message' => 'Website data not found',
             ], 404);
         }
     }
@@ -51,7 +51,6 @@ class WebsiteController extends Controller
         $validator = Validator::make($data, [
             'website_name' => 'required|string|max:255',
             'url' => 'required|string|unique:websites',
-            'user_id' => 'required|integer'
         ]);
         
         if ($validator->fails()) {
@@ -65,7 +64,7 @@ class WebsiteController extends Controller
 
         return response()->json([
             'status' => true,
-            'message' => 'Website created successfully',
+            'message' => 'Website data created successfully',
             'data' => $website,
         ], 201); // 201: Created
     }
@@ -76,7 +75,6 @@ class WebsiteController extends Controller
         $validator = Validator::make($data, [
             'website_name' => 'sometimes|required|string|max:255',
             'url' => 'sometimes|required|string|unique:websites,url,' . $id,
-            'user_id' => 'required|integer',
         ]);
         
         if ($validator->fails()) {
@@ -91,13 +89,13 @@ class WebsiteController extends Controller
 
             return response()->json([
                 'status' => true,
-                'message' => 'Website updated successfully',
+                'message' => 'Website data updated successfully',
                 'data' => $website,
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
                 'status' => false,
-                'message' => 'Website not found',
+                'message' => 'Website data not found',
             ], 404);
         }
     }

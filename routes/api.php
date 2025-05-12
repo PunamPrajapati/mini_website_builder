@@ -24,7 +24,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/', [WebsiteController::class, 'getAll'])->name('websites.getAll');
     
         // Get a specific website by ID
-        Route::get('/{id}', [WebsiteController::class, 'findById'])->name('websites.findById');
+        Route::get('/{id}', [WebsiteController::class, 'getById'])->name('websites.findById');
     
         // Create a new website
         Route::post('/', [WebsiteController::class, 'create'])->name('websites.create');
