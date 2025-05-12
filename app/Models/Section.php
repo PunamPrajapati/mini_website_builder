@@ -13,4 +13,10 @@ class Section extends Model
         'content' => 'array',
     ];
 
+    protected $fillable = [
+        'title',
+        'content',
+        'user_id'
+    ];
+      
 }
