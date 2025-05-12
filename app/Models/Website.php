@@ -9,4 +9,9 @@ class Website extends Model
 {
     use SoftDeletes;
 
+    protected $fillable = [
+        'website_name',
+        'url',
+        'user_id',
+    ];
 }

@@ -3,63 +3,101 @@
 namespace App\Http\Controllers;
 
 use App\Models\Website;
+use App\Services\WebsiteService;
 use Illuminate\Http\Request;
 
 class WebsiteController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+
+    protected $websiteService;
+
+    public function __construct(WebsiteService $websiteService)
     {
-        //
+        $this->websiteService = $websiteService;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function getAll()
     {
-        //
+        $websites = $this->websiteService->getAll();
+        return response()->json([
+            'status' => true,
+            'message' => 'Websites fetched successfully',
+            'data' => $websites,
+        ], 200);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function findById($id)
     {
-        //
+        try {
+            $website = $this->websiteService->findById($id);
+            return response()->json([
+                'status' => true,
+                'message' => 'Website fetched successfully',
+                'data' => $website,
+            ], 200);
+        }catch(\Exception $e)
+        {
+            return response()->json([
+                'status' => false,
+                'message' => 'Website not found',
+            ], 404);
+        }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Website $website)
+    public function create(Request $request)
     {
-        //
+        $data = $request->validate([
+            'website_name' => 'required|string|max:255',
+            'url' => 'required|string|unique:websites',
+            'user_id' => 'required|integer'
+        ]);
+        $website = $this->websiteService->create($data);
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Website created successfully',
+            'data' => $website,
+        ], 201); // 201: Created
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Website $website)
+    public function update($id, Request $request)
     {
-        //
+        $data = $request->validate([
+            'website_name' => 'sometimes|required|string|max:255',
+            'url' => 'sometimes|required|string|unique:websites,url,' . $id,
+            'user_id' => 'required|integer',
+        ]);
+
+        try {
+            $website = $this->websiteService->update($id, $data);
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Website updated successfully',
+                'data' => $website,
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Website not found',
+            ], 404);
+        }
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Website $website)
+    public function delete($id)
     {
-        //
-    }
+        try {
+            $this->websiteService->delete($id);
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Website $website)
-    {
-        //
+            return response()->json([
+                'status' => true,
+                'message' => 'Website deleted successfully',
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Website not found',
+            ], 404);
+        }
     }
 }
