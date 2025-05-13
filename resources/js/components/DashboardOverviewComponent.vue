@@ -2,7 +2,7 @@
     <section class="static-design">
         <div class="static-header">
             <h2>Welcome to Your Dashboard</h2>
-            <p>Manage your websites, check analytics, and customize your content below.</p>
+            <p>Manage your websites, create page layout and templates.</p>
         </div>
         <div class="card-section">
             <div class="card">

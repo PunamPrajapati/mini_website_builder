@@ -2,41 +2,41 @@
   <aside class="sidebar">
     <nav>
       <ul>
-        <li><a href="#">Dashboard</a></li>
-        <li><a href="#">Websites</a></li>
-        <li><a href="#">Templates</a></li>
-        <li><a href="#">Analytics</a></li>
-        <li><a href="#">Settings</a></li>
-        <li><a href="#">Support</a></li>
+        <li
+            v-for="item in menuItems"
+            :key="item.name"
+            :class="{ active: activeItem === item.name }"
+            @click="setActive(item.name)"
+            >
+            <a href="#">{{ item.label }}</a>
+        </li>
       </ul>
     </nav>
   </aside>
 </template>
-
+<script>
+export default {
+  data() {
+    return {
+      activeItem: 'dashboard', // Tracks the currently active menu item
+      menuItems: [
+        { name: 'dashboard', label: 'Dashboard' },
+        { name: 'websites', label: 'Websites' },
+        { name: 'sections', label: 'Sections' },
+        { name: 'pages', label: 'Pages' },
+        { name: 'analytics', label: 'Analytics' },
+        { name: 'settings', label: 'Settings' },
+        { name: 'support', label: 'Support' },
+      ],
+    };
+  },
+  methods: {
+    setActive(itemName) {
+      this.activeItem = itemName; // Set the clicked menu item as active
+    },
+  },
+};
+</script>
 <style scoped>
-.sidebar {
-  width: 250px;
-  background-color: #343a40;
-  color: #ffffff;
-  padding: 20px;
-}
-
-.sidebar nav ul {
-  list-style: none;
-  padding: 0;
-}
-
-.sidebar nav ul li {
-  margin: 15px 0;
-}
-
-.sidebar nav ul li a {
-  color: #ffffff;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.sidebar nav ul li a:hover {
-  text-decoration: underline;
-}
+@import './resources/css/sidebar.css';
 </style>

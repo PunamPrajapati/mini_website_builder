@@ -1,11 +1,13 @@
 <template>
-  <div class="dashboard-container">
-    <SidebarComponent />
-    <div class="main-content">
+  <div class="layout">
       <HeaderComponent />
-      <DashboardOverviewComponent />
+        <div class="main-content">
+            <SidebarComponent />
+            <div class="content">
+                <DashboardOverviewComponent />
+            </div>
+        </div>
       <FooterComponent />
-    </div>
   </div>
 </template>
 
@@ -17,12 +19,14 @@ import FooterComponent from './FooterComponent.vue';
 
 export default {
   components: {
-    SidebarComponent,
     HeaderComponent,
+    SidebarComponent,
     DashboardOverviewComponent,
     FooterComponent,
   },
 };
 </script>
 
-<style src="./resources/css/dashboard.css"></style>
+<style>
+@import './resources/css/dashboard.css';
+</style>

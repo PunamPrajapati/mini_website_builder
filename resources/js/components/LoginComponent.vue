@@ -58,8 +58,9 @@ export default {
           password: this.password,
         });
         if(response.data.status){
-          console.log("Login successful:", response.data);
           localStorage.setItem("auth_token", response.data.token);
+          let userData = response.data.data;
+          localStorage.setItem("userName", userData.first_name+' '+userData.last_name);
           this.$router.push("/dashboard");
         }else{
         this.error =
