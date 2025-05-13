@@ -1,36 +1,38 @@
 <template>
-  <div class="login-container">
-    <h2>Login</h2>
-    <form @submit.prevent="handleLogin">
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input
-          type="email"
-          id="email"
-          v-model="email"
-          required
-          placeholder="Enter your email"
-        />
-      </div>
+  <div class="form-container">
+    <div class="form-card">
+      <h2>Login</h2>
+      <form @submit.prevent="handleLogin">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            v-model="email"
+            required
+            placeholder="Enter your email"
+          />
+        </div>
 
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input
-          type="password"
-          id="password"
-          v-model="password"
-          required
-          placeholder="Enter your password"
-        />
-      </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            v-model="password"
+            required
+            placeholder="Enter your password"
+          />
+        </div>
 
-      <button type="submit" class="btn-login">Login</button>
-    </form>
-    <p v-if="error" class="error-message">{{ error }}</p>
-    <p>
-      Don’t have an account? 
-      <span class="link-span"><router-link to="/register">Register here</router-link></span> <!-- Register Link -->
-    </p>
+        <button type="submit" class="btn-submit">Login</button>
+      </form>
+      <p v-if="error" class="error-message">{{ error }}</p>
+      <p>
+        Don’t have an account? 
+        <span class="link-span"><router-link to="/register">Register here</router-link></span> <!-- Register Link -->
+      </p>
+    </div>
   </div>
 </template>
 
@@ -79,4 +81,6 @@ export default {
   },
 };
 </script>
-<style src="./resources/css/login.css"></style>
+<style scoped>
+@import './resources/css/login.css';
+</style>

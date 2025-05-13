@@ -1,45 +1,47 @@
 <template>
-  <div class="login-container">
-    <h1>Register</h1>
-    <form @submit.prevent="handleRegister">
-      <div class="form-group">
-        <label for="first_name">First Name</label>
-        <input type="text" id="first_name" v-model="first_name" placeholder="First Name" required />
-      </div>
-      <div class="form-group">
-        <label for="last_name">Last Name</label>
-        <input type="text" id="last_name" v-model="last_name" placeholder="First Name" required />
-      </div>
-      <div class="form-group">
-        <label for="username">Username</label>
-        <input type="text" id="username" v-model="username" placeholder="Username" required />
-      </div>
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" id="email" v-model="email" placeholder="Email" required />
-      </div>
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" id="password" v-model="password" placeholder="Password" required />
-      </div>
-      <div class="form-group">
-        <label for="password_confirmation">Confirm Password</label>
-        <input type="password" id="password_confirmation" v-model="passwordConfirmation" placeholder="Confirm Password" required />
-      </div>
-      <div class="form-group">
-        <label for="phone_number">Phone Number</label>
-        <input type="text" id="phone_number" v-model="phone_number" placeholder="Phone Number" required />
-      </div>
-      <div class="form-group">
-        <label for="address">Address</label>
-        <input type="text" id="address" v-model="address" placeholder="Address" />
-      </div>
-      <button type="submit">Register</button>
-    </form>
-    <p>
-      Already have an account?
-      <span class="link-span"><router-link to="/">Login here</router-link></span> <!-- Login Link -->
-    </p>
+  <div class="form-container">
+    <div class="form-card">
+        <h1>Register</h1>
+        <form @submit.prevent="handleRegister">
+        <div class="form-group">
+            <label for="first_name">First Name</label>
+            <input type="text" id="first_name" v-model="first_name" placeholder="First Name" required />
+        </div>
+        <div class="form-group">
+            <label for="last_name">Last Name</label>
+            <input type="text" id="last_name" v-model="last_name" placeholder="First Name" required />
+        </div>
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" v-model="username" placeholder="Username" required />
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" v-model="email" placeholder="Email" required />
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" v-model="password" placeholder="Password" required />
+        </div>
+        <div class="form-group">
+            <label for="password_confirmation">Confirm Password</label>
+            <input type="password" id="password_confirmation" v-model="passwordConfirmation" placeholder="Confirm Password" required />
+        </div>
+        <div class="form-group">
+            <label for="phone_number">Phone Number</label>
+            <input type="text" id="phone_number" v-model="phone_number" placeholder="Phone Number" required />
+        </div>
+        <div class="form-group">
+            <label for="address">Address</label>
+            <input type="text" id="address" v-model="address" placeholder="Address" />
+        </div>
+        <button type="submit" class="btn-submit">Register</button>
+        </form>
+        <p>
+        Already have an account?
+        <span class="link-span"><router-link to="/">Login here</router-link></span> <!-- Login Link -->
+        </p>
+    </div>
   </div>
 </template>
 
@@ -87,4 +89,6 @@ export default {
 };
 </script>
 
-<style src="./resources/css/login.css"></style>
+<style scoped>
+@import './resources/css/login.css';
+</style>
