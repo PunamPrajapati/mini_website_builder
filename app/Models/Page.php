@@ -13,4 +13,16 @@ class Page extends Model
         'content' => 'array',
     ];
 
+    protected $fillable = [
+        'title',
+        'slug',
+        'content',
+        'is_home_page',
+        'meta_title',
+        'meta_description',
+        'meta_keywords',
+        'user_id',
+        'website_id'
+    ];
+
 }
