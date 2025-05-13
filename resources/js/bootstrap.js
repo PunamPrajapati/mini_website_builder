@@ -10,6 +10,17 @@ import axios from 'axios';
 window.axios = axios;
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+window.axios.defaults.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+window.axios.defaults.baseURL = 'http://127.0.0.1:8000/api'; // Replace with your API's base URL
+window.axios.defaults.headers.common['Accept'] = 'application/json'; 
+window.axios.defaults.withCredentials = true; // Include credentials if needed
+
+const token = localStorage.getItem('auth_token'); // Replace with your token storage method
+
+// Set the Authorization header globally if the token exists
+if (token) {
+  window.axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+}
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
