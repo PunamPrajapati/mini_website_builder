@@ -32,7 +32,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/', [WebsiteController::class, 'create'])->name('websites.create');
 
         // Update an existing website
-        Route::post('/{id}', [WebsiteController::class, 'update'])->name('websites.update');
+        Route::put('/{id}', [WebsiteController::class, 'update'])->name('websites.update');
 
         // Delete a website
         Route::delete('/{id}', [WebsiteController::class, 'delete'])->name('websites.delete');

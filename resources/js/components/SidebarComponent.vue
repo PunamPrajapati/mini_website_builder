@@ -8,7 +8,14 @@
             :class="{ active: activeItem === item.name }"
             @click="setActive(item.name)"
             >
-            <a href="#">{{ item.label }}</a>
+            <router-link v-if="item.url" :to="item.url">
+              {{ item.label }}
+            </router-link>
+            
+            <!-- Use plain text for items without a URL -->
+            <span v-else>
+              {{ item.label }}
+            </span>
         </li>
       </ul>
     </nav>
@@ -20,13 +27,11 @@ export default {
     return {
       activeItem: 'dashboard', // Tracks the currently active menu item
       menuItems: [
-        { name: 'dashboard', label: 'Dashboard' },
-        { name: 'websites', label: 'Websites' },
-        { name: 'sections', label: 'Sections' },
-        { name: 'pages', label: 'Pages' },
-        { name: 'analytics', label: 'Analytics' },
-        { name: 'settings', label: 'Settings' },
-        { name: 'support', label: 'Support' },
+        { name: 'dashboard', label: 'Dashboard', url: '/dashboard' },
+        { name: 'websites', label: 'Websites', url: '/websites' },
+        { name: 'sections', label: 'Sections', url: '/sections' },
+        { name: 'pages', label: 'Pages', url: '/pages' },
+        { name: 'settings', label: 'Settings', url: '/settings' },
       ],
     };
   },
