@@ -36,7 +36,7 @@
 
 <script>
 export default {
-  name: "SectionList",
+  name: "PageComponent",
   data() {
     return {
       sections: [],

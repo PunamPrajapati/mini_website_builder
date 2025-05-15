@@ -1,60 +1,59 @@
 <template>
-  <div
-    class="canvas"
-    @dragover.prevent
-    @drop="handleDrop"
-  >
+  <div class="workspace">
     <div
-      v-for="item in droppedItems"
-      :key="item.id"
-      :style="{ position: 'absolute', top: item.position.y + 'px', left: item.position.x + 'px' }"
-      @click="$emit('selectItem', item)"
-      class="dropped-item"
+      v-for="element in elements"
+      :key="element.id"
+      class="workspace-element"
     >
-      <component :is="getComponentType(item.type)" />
+      <component
+        :is="getComponentType(element.type)"
+        :content.sync="element.content"
+      />
+      <component
+        :is="getComponentType(element.type)"
+        :content.sync="element.content"
+      />
     </div>
   </div>
 </template>
 
 <script>
+
+import EditableButtonComponent from '../Builder/EditableButtonComponent.vue';
+import EditableTextComponent from '../Builder/EditableTextComponent.vue';
+import EditableImageComponent from '../Builder/EditableImageComponent.vue';
+
 export default {
+  name: 'CanvaComponent',
+  component: {
+    EditableTextComponent,
+    EditableImageComponent,
+    EditableButtonComponent,
+  },
   props: {
-    droppedItems: Array,
+    elements: Array
   },
   methods: {
-    handleDrop(event) {
-      const position = {
-        x: event.offsetX,
-        y: event.offsetY,
-      };
-      this.$emit('drop', position);
-    },
     getComponentType(type) {
-      switch (type) {
-        case 'box':
-          return 'div';
-        case 'text':
-          return 'p';
-        case 'image':
-          return 'img';
-        case 'button':
-          return 'button';
-        default:
-          return 'div';
-      }
-    },
-  },
+    console.log(type);
+      if (type === 'text') return 'EditableTextComponent';
+      if (type === 'image') return 'EditableImageComponent';
+      if (type === 'button') return 'EditableButtonComponent';
+    }
+  }
 };
 </script>
 
-<style scoped>
-.canvas {
-  flex: 1;
-  position: relative;
-  background: #eef;
+<style>
+.workspace {
   border: 1px solid #ddd;
+  width: 100%;
+  min-height: 400px;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 10px;
 }
-.dropped-item {
-  cursor: pointer;
+.workspace-element {
+  margin: 5px;
 }
 </style>
